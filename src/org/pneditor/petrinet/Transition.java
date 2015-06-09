@@ -18,6 +18,7 @@ package org.pneditor.petrinet;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import org.pneditor.editor.time.SimpleTimer;
 import org.pneditor.util.GraphicsTools;
 import org.pneditor.util.GraphicsTools.HorizontalAlignment;
 import org.pneditor.util.GraphicsTools.VerticalAlignment;
@@ -31,6 +32,7 @@ public class Transition extends TransitionNode implements Cloneable {
     
     Integer earliestFiringTime;
     Integer latestFiringTime;
+    private SimpleTimer timer;
 
     @Override
     public void draw(Graphics g, DrawingOptions drawingOptions) {
@@ -64,5 +66,15 @@ public class Transition extends TransitionNode implements Cloneable {
 
     public void setLatestFiringTime(Integer latestFiringTime) {
         this.latestFiringTime = latestFiringTime;
-    }   
+    }  
+
+    public SimpleTimer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(SimpleTimer timer) {
+        this.timer = timer;
+    }
+    
+    
 }

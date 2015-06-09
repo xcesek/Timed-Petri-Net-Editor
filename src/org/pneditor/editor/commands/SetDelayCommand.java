@@ -16,6 +16,7 @@
  */
 package org.pneditor.editor.commands;
 
+import org.pneditor.editor.time.SimpleTimer;
 import org.pneditor.petrinet.Transition;
 import org.pneditor.util.Command;
 
@@ -43,6 +44,10 @@ public class SetDelayCommand implements Command {
         this.oldLatestFiringTime = transition.getLatestFiringTime();
         transition.setEarliestFiringTime(newEarliestFiringTime);
         transition.setLatestFiringTime(newLatestFiringTime);
+        
+        // init timer
+        SimpleTimer timer = new SimpleTimer(newEarliestFiringTime, newLatestFiringTime);
+        transition.setTimer(timer);
     }
 
     public void undo() {
