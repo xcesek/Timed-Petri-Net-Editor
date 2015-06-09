@@ -27,21 +27,27 @@ import org.pneditor.util.Command;
 public class SetDelayCommand implements Command {
 
     private Transition transition;
-    private Integer newDelay;
-    private Integer oldDelay;
+    private Integer newEarliestFiringTime;
+    private Integer newLatestFiringTime;
+    private Integer oldEarliestFiringTime;
+    private Integer oldLatestFiringTime;
 
-    public SetDelayCommand(Transition transition, Integer newDelay) {
+    public SetDelayCommand(Transition transition, Integer newEarliestFiringTime, Integer newLatestFiringTime) {
         this.transition = transition;
-        this.newDelay = newDelay;
+        this.newEarliestFiringTime = newEarliestFiringTime;
+        this.newLatestFiringTime = newLatestFiringTime;
     }
 
     public void execute() {
-        this.oldDelay = transition.getDelay();
-        transition.setDelay(newDelay);
+        this.oldEarliestFiringTime = transition.getEarliestFiringTime();
+        this.oldLatestFiringTime = transition.getLatestFiringTime();
+        transition.setEarliestFiringTime(newEarliestFiringTime);
+        transition.setLatestFiringTime(newLatestFiringTime);
     }
 
     public void undo() {
-        transition.setDelay(oldDelay);
+        transition.setEarliestFiringTime(oldEarliestFiringTime);
+        transition.setLatestFiringTime(oldLatestFiringTime);
     }
 
     public void redo() {
@@ -50,7 +56,7 @@ public class SetDelayCommand implements Command {
 
     @Override
     public String toString() {
-        return "Set delay to " + newDelay.toString();
+        return "Set earliest firing time to " + newEarliestFiringTime.toString() + " and latest firing time to " + newLatestFiringTime.toString();
     }
 
 }

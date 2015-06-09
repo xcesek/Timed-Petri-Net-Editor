@@ -29,7 +29,8 @@ import org.pneditor.util.GraphicsTools.VerticalAlignment;
  */
 public class Transition extends TransitionNode implements Cloneable {
     
-    Integer delay;
+    Integer earliestFiringTime;
+    Integer latestFiringTime;
 
     @Override
     public void draw(Graphics g, DrawingOptions drawingOptions) {
@@ -49,13 +50,19 @@ public class Transition extends TransitionNode implements Cloneable {
 //		GraphicsTools.drawString(g, getId(), getCenter().x, getStart().y, HorizontalAlignment.center, VerticalAlignment.bottom);
     }
 
-    public Integer getDelay() {
-        return delay;
+    public Integer getEarliestFiringTime() {
+        return earliestFiringTime;
     }
 
-    public void setDelay(Integer delay) {
-        this.delay = delay;
+    public void setEarliestFiringTime(Integer earliestFiringTime) {
+        this.earliestFiringTime = earliestFiringTime;
     }
-    
-    
+
+    public Integer getLatestFiringTime() {
+        return latestFiringTime;
+    }
+
+    public void setLatestFiringTime(Integer latestFiringTime) {
+        this.latestFiringTime = latestFiringTime;
+    }   
 }

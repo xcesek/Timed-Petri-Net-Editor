@@ -17,17 +17,11 @@
 package org.pneditor.editor.actions;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
 import org.pneditor.editor.Root;
-import org.pneditor.editor.commands.SetDelayCommand;
-import org.pneditor.editor.commands.SetLabelCommand;
 import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.editor.time.TimingPolicyType;
-import org.pneditor.petrinet.Node;
 import org.pneditor.util.GraphicsTools;
 
 /**
