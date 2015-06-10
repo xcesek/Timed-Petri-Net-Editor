@@ -53,7 +53,7 @@ public class SaveAction extends AbstractAction {
         if (file != null) {
             try {
                 FileType fileType = FileType.getAcceptingFileType(file, fileTypes);
-                fileType.save(root.getDocument(), file);
+                fileType.save(root.getDocument(), file, root.getGlobalTimer());
                 root.setModified(false);
             } catch (FileTypeException ex) {
                 JOptionPane.showMessageDialog(root.getParentFrame(), ex.getMessage());

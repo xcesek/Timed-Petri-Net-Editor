@@ -30,6 +30,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.TransformerException;
+import org.pneditor.editor.time.GlobalTimer;
+import org.pneditor.editor.time.SimpleTimer;
+import org.pneditor.editor.time.TimingPolicyType;
 import org.pneditor.petrinet.Arc;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Marking;
@@ -140,6 +143,7 @@ public class DocumentImporter {
         subnet.setId(xmlSubnet.id);
         subnet.setLabel(xmlSubnet.label);
         subnet.setCenter(xmlSubnet.x, xmlSubnet.y);
+        
         for (XmlArc xmlArc : xmlSubnet.arcs) {
             subnet.addElement((Arc) getObject(xmlArc));
         }
@@ -159,6 +163,13 @@ public class DocumentImporter {
             subnet.addElement((Subnet) getObject(xmlSubSubnet));
         }
         return subnet;
+    }
+    
+    private GlobalTimer getNewTimer(XmlSubnet xmlSubnet){
+        GlobalTimer timer = new GlobalTimer();
+        timer.setType(TimingPolicyType.valueOf( xmlSubnet.type));
+        
+        return timer;
     }
 
     private void constructInitialMarkingRecursively(Marking marking, XmlSubnet xmlSubnet) {
@@ -198,6 +209,11 @@ public class DocumentImporter {
         transition.setId(xmlTransition.id);
         transition.setLabel(xmlTransition.label);
         transition.setCenter(xmlTransition.x, xmlTransition.y);
+        transition.setEarliestFiringTime(xmlTransition.earliestFiringTime);
+        transition.setLatestFiringTime(xmlTransition.latestFiringTime);
+        
+        SimpleTimer timer = new SimpleTimer(xmlTransition.earliestFiringTime, xmlTransition.latestFiringTime);
+        transition.setTimer(timer);
         return transition;
     }
 

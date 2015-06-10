@@ -37,6 +37,7 @@ public class FireTransitionCommand implements Command {
     public void execute() {
         if (marking.isEnabled(transition)) {
             if (transition.getTimer() != null) {
+                transition.getTimer().resetTimer();
                 transition.getTimer().startTimer(transition, marking);
             } else {
                 marking.fire(transition);

@@ -23,6 +23,7 @@ import java.io.InputStream;
 import javax.swing.Icon;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
+import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Marking;
 import org.pneditor.petrinet.PetriNet;
@@ -53,12 +54,12 @@ public class ViptoolPnmlFileType extends FileType {
     }
 
     @Override
-    public void save(Document document, File file) throws FileTypeException {
+    public void save(Document document, File file, GlobalTimer timer) throws FileTypeException {
         try {
             final InputStream xslt = getClass().getResourceAsStream("/xslt/pnml-export.xslt");
             PetriNet petriNet = document.petriNet;
             Marking initialMarking = petriNet.getInitialMarking();
-            new DocumentExporter(document, initialMarking).writeToFileWithXslt(file, xslt);
+            new DocumentExporter(document, initialMarking, timer).writeToFileWithXslt(file, xslt);
         } catch (FileNotFoundException ex) {
             throw new FileTypeException(ex.getMessage());
         } catch (JAXBException ex) {

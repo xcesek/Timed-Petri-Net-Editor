@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
+import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Marking;
 import org.pneditor.util.GraphicsTools;
@@ -63,7 +64,7 @@ public class PngFileType extends FileType {
     }
 
     @Override
-    public void save(Document document, File file) throws FileTypeException {
+    public void save(Document document, File file, GlobalTimer timer) throws FileTypeException {
         try {
             Marking initialMarking = document.petriNet.getInitialMarking();
             BufferedImage bufferedImage = document.petriNet.getCurrentSubnet().getPreview(initialMarking);

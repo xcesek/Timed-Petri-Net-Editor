@@ -26,5 +26,11 @@ public class XmlTransition extends XmlNode {
 
     @XmlElement(name = "label")
     public String label;
+    
+    @XmlElement(name = "earliestFiringTime")
+    public Integer earliestFiringTime;
+    
+    @XmlElement(name = "latestFiringTime")
+    public Integer latestFiringTime;
 
 }

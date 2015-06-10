@@ -29,6 +29,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.TransformerException;
+import org.pneditor.editor.time.GlobalTimer;
 import org.pneditor.petrinet.Arc;
 import org.pneditor.petrinet.Document;
 import org.pneditor.petrinet.Element;
@@ -49,12 +50,12 @@ public class DocumentExporter {
 
     private XmlDocument xmlDocument = new XmlDocument();
 
-    public DocumentExporter(Document document, Marking marking) {
+    public DocumentExporter(Document document, Marking marking, GlobalTimer timer) {
 
         marking.getLock().readLock().lock();
         try {
 //			xmlDocument.rootSubnet = getXmlSubnet(document.petriNet.getRootSubnet(), marking);
-            xmlDocument.rootSubnet = getXmlSubnet(marking.getPetriNet().getRootSubnet(), marking);
+            xmlDocument.rootSubnet = getXmlSubnet(marking.getPetriNet().getRootSubnet(), marking, timer);
         } finally {
             marking.getLock().readLock().unlock();
         }
@@ -101,15 +102,17 @@ public class DocumentExporter {
         return xmlRole;
     }
 
-    private XmlSubnet getXmlSubnet(Subnet subnet, Marking initialMarking) {
+    private XmlSubnet getXmlSubnet(Subnet subnet, Marking initialMarking, GlobalTimer timer) {
+        
         XmlSubnet xmlSubnet = new XmlSubnet();
         xmlSubnet.id = subnet.getId();
         xmlSubnet.label = subnet.getLabel();
         xmlSubnet.x = subnet.getCenter().x;
         xmlSubnet.y = subnet.getCenter().y;
+        xmlSubnet.type = timer.getType().toString();
         for (Element element : subnet.getElements()) {
             if (element instanceof Subnet) {
-                xmlSubnet.subnets.add(getXmlSubnet((Subnet) element, initialMarking));
+                xmlSubnet.subnets.add(getXmlSubnet((Subnet) element, initialMarking, timer));
             } else if (element instanceof Transition) {
                 xmlSubnet.transitions.add(getXmlTransition((Transition) element));
             } else if (element instanceof ReferencePlace) {
@@ -142,6 +145,9 @@ public class DocumentExporter {
         xmlTransition.x = transition.getCenter().x;
         xmlTransition.y = transition.getCenter().y;
         xmlTransition.label = transition.getLabel();
+        xmlTransition.earliestFiringTime = transition.getEarliestFiringTime();
+        xmlTransition.latestFiringTime = transition.getLatestFiringTime();
+        
         return xmlTransition;
     }
 

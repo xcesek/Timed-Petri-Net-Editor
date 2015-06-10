@@ -82,6 +82,6 @@ public class SaveSubnetAsAction extends AbstractAction {
         Document document = new Document();
         PetriNet petriNet = document.petriNet;
         petriNet.setRootSubnet(subnet);
-        new PflowxFileType().save(document, file);
+        new PflowxFileType().save(document, file, root.getGlobalTimer());
     }
 }

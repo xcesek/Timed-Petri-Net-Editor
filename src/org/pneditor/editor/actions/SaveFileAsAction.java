@@ -74,7 +74,7 @@ public class SaveFileAsAction extends AbstractAction {
                     new String[]{"Overwrite", "Cancel"},
                     "Cancel") == JOptionPane.YES_OPTION) {
                 try {
-                    chosenFileType.save(root.getDocument(), file);
+                    chosenFileType.save(root.getDocument(), file, root.getGlobalTimer());
                 } catch (FileTypeException ex) {
                     JOptionPane.showMessageDialog(root.getParentFrame(), ex.getMessage());
                 }
